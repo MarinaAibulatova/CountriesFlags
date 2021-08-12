@@ -27,6 +27,7 @@ class FlagsViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Flags"
+        view.backgroundColor = .red
     }
 
 }

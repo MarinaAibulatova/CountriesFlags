@@ -30,19 +30,20 @@ class FlagsView: UIView {
     //MARK: - private methods
     private func setupViews() {
         flags = Assets.Flag.allFlags
-        
+        backgroundColor = .white
         layot = {
             let i = UICollectionViewFlowLayout()
             i.sectionInset = UIEdgeInsets(top: 20, left: 10, bottom: 10, right: 10)
-            i.itemSize = CGSize(width: 60, height: 60)
+            i.itemSize = CGSize(width: UIScreen.main.bounds.width / 5, height: UIScreen.main.bounds.width / 5)
             return i
         }()
         
         collectionView = {
             let i = UICollectionView(frame: .zero, collectionViewLayout: layot)
+            i.backgroundColor = .white
             i.delegate = self
             i.dataSource = self
-            i.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "id")
+            i.register(FlagCollectionViewCell.self, forCellWithReuseIdentifier: "id")
             return i
         }()
         
@@ -60,22 +61,23 @@ class FlagsView: UIView {
 //MARK: - UICollectionViewDataSource
 extension FlagsView: UICollectionViewDataSource {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        flags.count
+        1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return flags.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath)
-        cell.backgroundColor = .red
-        
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as! FlagCollectionViewCell
+        cell.imageFlag.image = flags[indexPath.row]
         return cell
     }
 }
 
 //MARK: - UICollectionViewDelegate
 extension FlagsView: UICollectionViewDelegate {
-    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath.row)
+    }
 }
