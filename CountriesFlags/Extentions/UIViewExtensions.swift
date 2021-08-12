@@ -1,12 +1,12 @@
 //
-//  FlagModel.swift
+//  UIViewExtensions.swift
 //  CountriesFlags
 //
 //  Created by Марина Айбулатова on 12.08.2021.
 //
 
-import Foundation
+import SnapKit
 
-class FlagModel {
-    //let flagsImages: 
+extension UIView {
+    
 }
