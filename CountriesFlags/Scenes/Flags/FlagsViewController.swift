@@ -55,9 +55,10 @@ class FlagsViewController: UIViewController {
         collectionView.rx
             .itemSelected
             .subscribe(
-                onNext: {indexPath in
+                onNext: {[weak self] (indexPath) in
                     FlagModel.shared.id
                         .accept(indexPath.row)
+                    self?.navigationController?.popViewController(animated: true)
                 }).disposed(by: disposeBag)
     }
 }
