@@ -129,7 +129,6 @@ internal enum Assets {
             images.append(image(named: "lu"))
             images.append(image(named: "mu"))
             images.append(image(named: "mr"))
-            
             images.append(image(named: "mg"))
             images.append(image(named: "mw"))
             images.append(image(named: "my"))

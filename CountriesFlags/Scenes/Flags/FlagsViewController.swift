@@ -16,7 +16,7 @@ class FlagsViewController: UIViewController {
     
     private weak var collectionView: UICollectionView!
     
-    //MARK: - life cicle
+    //MARK: - life cycle
     override func loadView() {
         let view = FlagsView()
         self.collectionView = view.collectionView
@@ -58,7 +58,6 @@ class FlagsViewController: UIViewController {
                 onNext: {indexPath in
                     FlagModel.shared.id
                         .accept(indexPath.row)
-                    print(FlagModel.shared.id.value)
                 }).disposed(by: disposeBag)
     }
 }

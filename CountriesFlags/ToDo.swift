@@ -12,5 +12,8 @@ import Foundation
 //find and add pictires
 //create view
 //create class for cell
+//create model - singlton?
+//bind collection fiew
 
-//collection view - RestaurantDishesDataProvider
+
+//collection view

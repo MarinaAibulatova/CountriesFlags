@@ -21,6 +21,7 @@
 		9C60081826C54FA50064EAB8 /* UIViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60081726C54FA50064EAB8 /* UIViewExtensions.swift */; };
 		9C60081B26C553060064EAB8 /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60081A26C553060064EAB8 /* Assets.swift */; };
 		9C60081E26C566680064EAB8 /* FlagCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60081D26C566680064EAB8 /* FlagCollectionViewCell.swift */; };
+		9C60082026C64CBD0064EAB8 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60081F26C64CBD0064EAB8 /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +42,7 @@
 		9C60081726C54FA50064EAB8 /* UIViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewExtensions.swift; sourceTree = "<group>"; };
 		9C60081A26C553060064EAB8 /* Assets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		9C60081D26C566680064EAB8 /* FlagCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagCollectionViewCell.swift; sourceTree = "<group>"; };
+		9C60081F26C64CBD0064EAB8 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		EA50CDE099B6F727D4C55162 /* Pods_CountriesFlags.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CountriesFlags.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -121,6 +123,7 @@
 		9C60080926C53DAE0064EAB8 /* MainScene */ = {
 			isa = PBXGroup;
 			children = (
+				9C60081F26C64CBD0064EAB8 /* MainView.swift */,
 				9C60080A26C53DC90064EAB8 /* MainViewController.swift */,
 			);
 			path = MainScene;
@@ -290,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C6007F826C526A80064EAB8 /* FlagsViewController.swift in Sources */,
+				9C60082026C64CBD0064EAB8 /* MainView.swift in Sources */,
 				9C60081126C5418D0064EAB8 /* ToDo.swift in Sources */,
 				9C60081E26C566680064EAB8 /* FlagCollectionViewCell.swift in Sources */,
 				9C6007F426C526A80064EAB8 /* AppDelegate.swift in Sources */,
