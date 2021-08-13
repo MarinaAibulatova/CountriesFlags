@@ -41,8 +41,6 @@ class FlagsView: UIView {
         collectionView = {
             let i = UICollectionView(frame: .zero, collectionViewLayout: layot)
             i.backgroundColor = .white
-            i.delegate = self
-            i.dataSource = self
             i.register(FlagCollectionViewCell.self, forCellWithReuseIdentifier: "id")
             return i
         }()
@@ -58,26 +56,3 @@ class FlagsView: UIView {
     }
 }
 
-//MARK: - UICollectionViewDataSource
-extension FlagsView: UICollectionViewDataSource {
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return flags.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as! FlagCollectionViewCell
-        cell.imageFlag.image = flags[indexPath.row]
-        return cell
-    }
-}
-
-//MARK: - UICollectionViewDelegate
-extension FlagsView: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath.row)
-    }
-}

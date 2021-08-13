@@ -27,7 +27,38 @@ class FlagsViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Flags"
-        view.backgroundColor = .red
+       
+        configureViews()
+        configureBinding()
     }
-
+    
+    //MARK: - private methods
+    private func configureViews() {
+        
+    }
+    
+    private func configureBinding() {
+        let flags = Observable.of(Assets.Flag.allFlags)
+        
+        flags
+            .bind(to: collectionView.rx.items) {
+                (collectionView: UICollectionView, index: Int, element: UIImage) in
+                let indexPath = IndexPath(item: index, section: 0)
+                let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as! FlagCollectionViewCell
+                cell.imageFlag.image = element
+                
+                return cell
+            }
+            .disposed(by: disposeBag)
+        
+        
+        collectionView.rx
+            .itemSelected
+            .subscribe(
+                onNext: {indexPath in
+                    FlagModel.shared.id
+                        .accept(indexPath.row)
+                    print(FlagModel.shared.id.value)
+                }).disposed(by: disposeBag)
+    }
 }

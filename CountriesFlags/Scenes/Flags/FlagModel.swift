@@ -6,7 +6,17 @@
 //
 
 import Foundation
+import RxSwift
+import RxCocoa
 
 class FlagModel {
-    //let flagsImages: 
+    static let shared: FlagModel = {
+       let i = FlagModel()
+        
+        return i
+    }()
+    
+    var id: BehaviorRelay<Int> = .init(value: 0)
+    
+    private init() {}
 }
