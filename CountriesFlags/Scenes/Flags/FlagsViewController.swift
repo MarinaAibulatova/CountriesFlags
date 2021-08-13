@@ -9,12 +9,17 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+protocol FlagsDelegate: AnyObject {
+    func didFinishFlag(_ id: Int)
+}
+
 class FlagsViewController: UIViewController {
 
     //MARK: - private properties
     private let disposeBag = DisposeBag()
     
     private weak var collectionView: UICollectionView!
+    weak var delegate: FlagsDelegate?
     
     var viewModel: FlagsViewModel
     var router: FlagsRouter!
@@ -53,8 +58,16 @@ class FlagsViewController: UIViewController {
     }
     
     private func configureBinding() {
-    
         
+        collectionView.rx
+            .itemSelected
+            .subscribe(
+                onNext: {
+                    [weak self] (indexPath) in
+                    self?.viewModel.choosedFlag.accept(indexPath.row)
+                    self?.delegate?.didFinishFlag(indexPath.row)
+                })
+            .disposed(by: disposeBag)
     }
     
     private func configureRouter() {
@@ -74,6 +87,10 @@ extension FlagsViewController: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cell = collectionView.cellForItem(at: indexPath)
         cell?.isSelected = true
+        
+        let index = IndexPath(row: viewModel.choosedFlag.value, section: 0)
+        let cellS = collectionView.cellForItem(at: index)
+        cellS?.isSelected = false
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
@@ -91,6 +108,12 @@ extension FlagsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as! FlagCollectionViewCell
         let flag = viewModel.flags[indexPath.row]
         cell.configure(flag)
+        if indexPath.row == viewModel.choosedFlag.value {
+            cell.isSelected = true
+        }
+        else {
+            cell.isSelected = false
+        }
         
         return cell
     }

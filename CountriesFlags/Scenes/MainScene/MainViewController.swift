@@ -15,6 +15,8 @@ class MainViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private weak var flagLabel: UILabel!
     private weak var chooseButton: UIButton!
+    
+    private var choosedFlagId: Int = 0
 
     //MARK: - public properties
     var router: MainRouter!
@@ -33,7 +35,7 @@ class MainViewController: UIViewController {
         title = "Choosing flag"
         configureViews()
         configureBinding()
-        router = MainRouter(self)
+        configureRouter()
     }
     
     //MARK: - private methods
@@ -45,12 +47,23 @@ class MainViewController: UIViewController {
         
     }
     
+    private func configureRouter() {
+        router = MainRouter(self)
+    }
+    
     //MARK: - actions
     @objc func buttonTapped(_ sender: UIButton) {
-        router.showFlags()
+        router.showFlags(id: choosedFlagId)
     }
     
     // MARK: - Navigation
 
 
+}
+
+extension MainViewController: FlagsDelegate {
+    func didFinishFlag(_ id: Int) {
+        flagLabel.text = String(id)
+        choosedFlagId = id
+    }
 }

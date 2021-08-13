@@ -25,7 +25,7 @@ class FlagsDetailViewModel: FlagsViewModel {
         
     }
     
-    init() {
+    init(flagId: Int) {
         var flags: [FlagModel] = []
         var id = 0
         for item in Assets.Flag.allFlags {
@@ -35,5 +35,6 @@ class FlagsDetailViewModel: FlagsViewModel {
             flags.append(flag)
         }
         self.flags = flags
+        self.choosedFlag.accept(flagId)
     }
 }
