@@ -6,17 +6,11 @@
 //
 
 import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 
-class FlagModel {
-    static let shared: FlagModel = {
-       let i = FlagModel()
-        
-        return i
-    }()
-    
-    var id: BehaviorRelay<Int> = .init(value: 0)
-    
-    private init() {}
+struct FlagModel {
+    let id: Int
+    let image: UIImage
 }

@@ -22,15 +22,33 @@ class FlagCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    //MARK: - public methods
+    override var isSelected: Bool {
+        didSet {
+            if self.isSelected {
+                contentView.layer.borderWidth = 2
+                contentView.layer.borderColor = UIColor.gray.cgColor
+            }else {
+                contentView.layer.borderWidth = 0
+                contentView.layer.borderColor = UIColor.white.cgColor
+            }
+        }
+    }
+    
+    func configure(_ flag: FlagModel) {
+        imageFlag.image = flag.image
+    }
+    
+    
     //MARK: - private methods
     private func setupView() {
         imageFlag =  {
             let i = UIImageView()
-            i.contentMode = .scaleToFill
+            i.contentMode = .scaleAspectFit
             return i
         }()
         
-        addSubview(imageFlag)
+        contentView.addSubview(imageFlag)
     }
     
     private func setupConstraints() {

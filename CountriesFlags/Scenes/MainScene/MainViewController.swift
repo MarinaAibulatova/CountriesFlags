@@ -16,6 +16,9 @@ class MainViewController: UIViewController {
     private weak var flagLabel: UILabel!
     private weak var chooseButton: UIButton!
 
+    //MARK: - public properties
+    var router: MainRouter!
+    
     //MARK: - life cycle
     override func loadView() {
         let view = MainView()
@@ -30,6 +33,7 @@ class MainViewController: UIViewController {
         title = "Choosing flag"
         configureViews()
         configureBinding()
+        router = MainRouter(self)
     }
     
     //MARK: - private methods
@@ -38,17 +42,12 @@ class MainViewController: UIViewController {
     }
     
     private func configureBinding() {
-        FlagModel.shared.id
-            .asObservable()
-            .map{id -> String in return String(id)}
-            .bind(to: flagLabel.rx.text)
-            .disposed(by: disposeBag)
+        
     }
     
     //MARK: - actions
     @objc func buttonTapped(_ sender: UIButton) {
-        let controller = FlagsViewController()
-        navigationController?.pushViewController(controller, animated: true)
+        router.showFlags()
     }
     
     // MARK: - Navigation
