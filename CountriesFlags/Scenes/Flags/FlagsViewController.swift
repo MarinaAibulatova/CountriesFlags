@@ -108,12 +108,11 @@ extension FlagsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as! FlagCollectionViewCell
         let flag = viewModel.flags[indexPath.row]
         cell.configure(flag)
+        
         if indexPath.row == viewModel.choosedFlag.value {
             cell.isSelected = true
         }
-        else {
-            cell.isSelected = false
-        }
+        
         
         return cell
     }
