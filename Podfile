@@ -9,4 +9,5 @@ target 'CountriesFlags' do
 pod 'RxSwift'
 pod 'RxCocoa'
 pod 'SnapKit'
+pod 'Kingfisher', '~> 6.0'
 end

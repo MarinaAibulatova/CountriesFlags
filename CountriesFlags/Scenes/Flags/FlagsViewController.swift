@@ -10,7 +10,7 @@ import RxCocoa
 import RxSwift
 
 protocol FlagsDelegate: AnyObject {
-    func didFinishFlag(_ id: Int)
+    func didFinishFlag(_ id: Int?)
 }
 
 class FlagsViewController: UIViewController {
@@ -49,33 +49,25 @@ class FlagsViewController: UIViewController {
         configureBinding()
         configureRouter()
         configureNavigatorBar()
-    }
-    
-    override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        if let choosedFlag = viewModel.choosedFlag.value {
-            let indexPath = IndexPath(row: choosedFlag, section: 0)
-            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+        
+        DispatchQueue.main.async {
+            if let choosedFlag = self.viewModel.choosedFlag.value {
+                let indexPath = IndexPath(row: choosedFlag, section: 0)
+                self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+            }
         }
     }
     
+    
     //MARK: - private methods
     private func configureViews() {
+        collectionView.register(FlagCollectionViewCell.self, forCellWithReuseIdentifier: FlagCollectionViewCell.idCell)
         collectionView.delegate = self
         collectionView.dataSource = self
     }
     
     private func configureBinding() {
-        
-        collectionView.rx
-            .itemSelected
-            .subscribe(
-                onNext: {
-                    [weak self] (indexPath) in
-                    self?.viewModel.choosedFlag.accept(indexPath.row)
-                    self?.delegate?.didFinishFlag(indexPath.row)
-                })
-            .disposed(by: disposeBag)
+ 
     }
     
     private func configureRouter() {
@@ -86,8 +78,14 @@ class FlagsViewController: UIViewController {
         navigationItem.rightBarButtonItem = UIBarButtonItem(
             image: UIImage(systemName: "square.and.arrow.down.fill"),
             style: .plain,
-            target: router,
-            action: #selector(router.back))
+            target: self,
+            action: #selector(didFinishSelected(_:))
+        )
+    }
+    
+   @objc func didFinishSelected(_ sender: UIButton) {
+        self.delegate?.didFinishFlag(viewModel.choosedFlag.value)
+        self.router.back()
     }
 }
 
@@ -97,8 +95,10 @@ extension FlagsViewController: UICollectionViewDelegate {
         
         if cell.isSelected {
             collectionView.selectItem(at: nil, animated: true, scrollPosition: .centeredVertically)
+            self.viewModel.choosedFlag.accept(nil)
             return false
         }
+        self.viewModel.choosedFlag.accept(indexPath.row)
         return true
     }
 }
@@ -109,12 +109,16 @@ extension FlagsViewController: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as! FlagCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: FlagCollectionViewCell.idCell, for: indexPath) as! FlagCollectionViewCell
         let flag = viewModel.flags[indexPath.row]
         cell.configure(flag)
         
         return cell
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+       // print(indexPath.row)
+       // self.viewModel.choosedFlag.accept(indexPath.row)
+    }
     
 }

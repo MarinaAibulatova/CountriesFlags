@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B1A6D488B3644C9050A65DD /* Pods_CountriesFlags.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EA50CDE099B6F727D4C55162 /* Pods_CountriesFlags.framework */; };
+		9C4CC08726CA8E73003D6554 /* URLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C4CC08626CA8E73003D6554 /* URLExtensions.swift */; };
 		9C6007F426C526A80064EAB8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6007F326C526A80064EAB8 /* AppDelegate.swift */; };
 		9C6007F626C526A80064EAB8 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6007F526C526A80064EAB8 /* SceneDelegate.swift */; };
 		9C6007F826C526A80064EAB8 /* FlagsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6007F726C526A80064EAB8 /* FlagsViewController.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		7E09EADF63C4E4031B9DF587 /* Pods-CountriesFlags.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountriesFlags.release.xcconfig"; path = "Target Support Files/Pods-CountriesFlags/Pods-CountriesFlags.release.xcconfig"; sourceTree = "<group>"; };
+		9C4CC08626CA8E73003D6554 /* URLExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLExtensions.swift; sourceTree = "<group>"; };
 		9C5FFC021F7A06D3B80D8083 /* Pods-CountriesFlags.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountriesFlags.debug.xcconfig"; path = "Target Support Files/Pods-CountriesFlags/Pods-CountriesFlags.debug.xcconfig"; sourceTree = "<group>"; };
 		9C6007F026C526A80064EAB8 /* CountriesFlags.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CountriesFlags.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9C6007F326C526A80064EAB8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -172,6 +174,7 @@
 			isa = PBXGroup;
 			children = (
 				9C60081726C54FA50064EAB8 /* UIViewExtensions.swift */,
+				9C4CC08626CA8E73003D6554 /* URLExtensions.swift */,
 			);
 			path = Extentions;
 			sourceTree = "<group>";
@@ -346,6 +349,7 @@
 				9C60081526C543EC0064EAB8 /* FlagModel.swift in Sources */,
 				9C60080F26C53ECB0064EAB8 /* FlagsView.swift in Sources */,
 				9C60081826C54FA50064EAB8 /* UIViewExtensions.swift in Sources */,
+				9C4CC08726CA8E73003D6554 /* URLExtensions.swift in Sources */,
 				9C60081B26C553060064EAB8 /* Assets.swift in Sources */,
 				9C60080D26C53EB70064EAB8 /* FlagsViewModel.swift in Sources */,
 			);

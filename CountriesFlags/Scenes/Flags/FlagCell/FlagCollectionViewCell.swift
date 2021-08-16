@@ -6,9 +6,11 @@
 //
 
 import UIKit
+import Kingfisher
 
 class FlagCollectionViewCell: UICollectionViewCell {
     //MARK: - public properties
+    static var idCell: String = "id"
     var imageFlag: UIImageView!
     
     //MARK: - init
@@ -36,7 +38,7 @@ class FlagCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(_ flag: FlagModel) {
-        imageFlag.image = flag.image
+        imageFlag.kf.setImage(with: flag.url!)
     }
     
     

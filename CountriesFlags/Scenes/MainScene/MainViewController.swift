@@ -44,6 +44,7 @@ class MainViewController: UIViewController {
     }
     
     private func configureBinding() {
+        //test
         
     }
     
@@ -62,8 +63,8 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: FlagsDelegate {
-    func didFinishFlag(_ id: Int) {
-        flagLabel.text = String(id)
+    func didFinishFlag(_ id: Int?) {
+        flagLabel.text = (id == nil) ? "" : String(id!)
         choosedFlagId = id
     }
 }

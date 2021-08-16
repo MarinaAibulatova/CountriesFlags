@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import UIKit
 import RxSwift
 import RxCocoa
 
@@ -29,7 +30,15 @@ class FlagsDetailViewModel: FlagsViewModel {
         var flags: [FlagModel] = []
         var id = 0
         for item in Assets.Flag.allFlags {
-            let flag = FlagModel(id: id, image: item)
+            
+            let des = item.description
+            let startIndex = des.index(des.startIndex, offsetBy: 36)
+            let end = des.index(des.endIndex, offsetBy: -13)
+            let range = startIndex..<end
+            
+            let url = URL.urlForImage(name: String(des[range]))
+            
+            let flag = FlagModel(id: id, image: item, url: url)
             id += 1
             
             flags.append(flag)
@@ -38,3 +47,4 @@ class FlagsDetailViewModel: FlagsViewModel {
         self.choosedFlag.accept(flagId)
     }
 }
+
