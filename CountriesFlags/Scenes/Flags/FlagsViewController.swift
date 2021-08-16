@@ -51,10 +51,19 @@ class FlagsViewController: UIViewController {
         configureNavigatorBar()
     }
     
+    override func viewDidLayoutSubviews() {
+        let indexPath = IndexPath(row: viewModel.choosedFlag.value, section: 0)
+        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
+        
+    }
+    
     //MARK: - private methods
     private func configureViews() {
         collectionView.delegate = self
         collectionView.dataSource = self
+        
+        let indexPath = IndexPath(row: viewModel.choosedFlag.value, section: 0)
+        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
     }
     
     private func configureBinding() {
@@ -84,19 +93,7 @@ class FlagsViewController: UIViewController {
 }
 
 extension FlagsViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.isSelected = true
-        
-        let index = IndexPath(row: viewModel.choosedFlag.value, section: 0)
-        let cellS = collectionView.cellForItem(at: index)
-        cellS?.isSelected = false
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
-        let cell = collectionView.cellForItem(at: indexPath)
-        cell?.isSelected = false
-    }
+  
 }
 
 extension FlagsViewController: UICollectionViewDataSource {
