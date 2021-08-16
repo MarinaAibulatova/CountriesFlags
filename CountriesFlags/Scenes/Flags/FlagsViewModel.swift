@@ -31,14 +31,14 @@ class FlagsDetailViewModel: FlagsViewModel {
         var id = 0
         for item in Assets.Flag.allFlags {
             
-            let des = item.description
-            let startIndex = des.index(des.startIndex, offsetBy: 36)
-            let end = des.index(des.endIndex, offsetBy: -13)
+            let description = item.description
+            let startIndex = description.index(description.startIndex, offsetBy: 36)
+            let end = description.index(description.endIndex, offsetBy: -13)
             let range = startIndex..<end
             
-            let url = URL.urlForImage(name: String(des[range]))
+            let url = URL.urlForImage(name: String(description[range]))
             
-            let flag = FlagModel(id: id, image: item, url: url)
+            let flag = FlagModel(id: id, url: url)
             id += 1
             
             flags.append(flag)

@@ -116,9 +116,4 @@ extension FlagsViewController: UICollectionViewDataSource {
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-       // print(indexPath.row)
-       // self.viewModel.choosedFlag.accept(indexPath.row)
-    }
-    
 }

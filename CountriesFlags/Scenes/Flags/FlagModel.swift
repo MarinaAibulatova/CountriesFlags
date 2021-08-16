@@ -12,6 +12,5 @@ import RxCocoa
 
 struct FlagModel {
     let id: Int
-    let image: UIImage
     let url: URL?
 }
