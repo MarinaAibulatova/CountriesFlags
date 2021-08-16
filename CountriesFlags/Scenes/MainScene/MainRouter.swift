@@ -8,8 +8,8 @@
 import UIKit
 
 class MainRouter: BaseRouter {
-    func showFlags(id: Int?) {
-        let factory = FlagsFactory(id)
+    func showFlags(with selectedFlag: FlagModel?) {
+        let factory = FlagsFactory(selectedFlag)
         let vc = factory.makeViewController()
         vc.delegate = viewController as? MainViewController
         viewController?.navigationController?.pushViewController(vc, animated: true)

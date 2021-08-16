@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
     private weak var flagLabel: UILabel!
     private weak var chooseButton: UIButton!
     
-    private var choosedFlagId: Int?
+    private var selectedFlag: FlagModel?
 
     //MARK: - public properties
     var router: MainRouter!
@@ -54,7 +54,7 @@ class MainViewController: UIViewController {
     
     //MARK: - actions
     @objc func buttonTapped(_ sender: UIButton) {
-        router.showFlags(id: choosedFlagId)
+        router.showFlags(with: selectedFlag)
     }
     
     // MARK: - Navigation
@@ -63,8 +63,8 @@ class MainViewController: UIViewController {
 }
 
 extension MainViewController: FlagsDelegate {
-    func didFinishFlag(_ id: Int?) {
-        flagLabel.text = (id == nil) ? "" : String(id!)
-        choosedFlagId = id
+    func didFinishFlag(_ selectedFlag: FlagModel?) {
+        flagLabel.text = (selectedFlag == nil) ? "" : String(selectedFlag!.id)
+        self.selectedFlag = selectedFlag
     }
 }

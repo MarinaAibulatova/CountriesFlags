@@ -8,13 +8,13 @@
 import UIKit
 
 class FlagsFactory: SceneFactory {
-    var flagId: Int?
+    var selectedFlag: FlagModel?
     
-    init(_ flagId: Int?) {
-        self.flagId = flagId
+    init(_ selectedFlag: FlagModel?) {
+        self.selectedFlag = selectedFlag
     }
     func makeViewModel() -> FlagsViewModel {
-        return FlagsDetailViewModel(flagId: flagId)
+        return FlagsDetailViewModel(currentFlag: selectedFlag)
     }
     
     func makeViewController() -> some FlagsViewController {

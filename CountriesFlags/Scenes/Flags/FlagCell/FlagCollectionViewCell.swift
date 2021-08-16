@@ -38,7 +38,9 @@ class FlagCollectionViewCell: UICollectionViewCell {
     }
     
     func configure(_ flag: FlagModel) {
-        imageFlag.kf.setImage(with: flag.url!)
+        if let url = flag.url {
+            imageFlag.kf.setImage(with: url)
+        }
     }
     
     

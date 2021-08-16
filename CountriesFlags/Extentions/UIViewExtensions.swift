@@ -6,7 +6,8 @@
 //
 
 import SnapKit
+import Kingfisher
 
 extension UIView {
-    
+ 
 }
