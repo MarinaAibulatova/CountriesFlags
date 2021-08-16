@@ -8,7 +8,7 @@
 import UIKit
 
 class MainRouter: BaseRouter {
-    func showFlags(id: Int) {
+    func showFlags(id: Int?) {
         let factory = FlagsFactory(id)
         let vc = factory.makeViewController()
         vc.delegate = viewController as? MainViewController

@@ -13,11 +13,11 @@ protocol FlagsViewModel: AnyObject {
     var flags: [FlagModel] {get set}
     func saveFlag()
     
-    var choosedFlag: BehaviorRelay<Int> {get set}
+    var choosedFlag: BehaviorRelay<Optional<Int>> {get set}
 }
 
 class FlagsDetailViewModel: FlagsViewModel {
-    var choosedFlag: BehaviorRelay<Int> = .init(value: 0)
+    var choosedFlag: BehaviorRelay<Optional<Int>> = .init(value: nil)
     
     var flags: [FlagModel]
     
@@ -25,7 +25,7 @@ class FlagsDetailViewModel: FlagsViewModel {
         
     }
     
-    init(flagId: Int) {
+    init(flagId: Int?) {
         var flags: [FlagModel] = []
         var id = 0
         for item in Assets.Flag.allFlags {

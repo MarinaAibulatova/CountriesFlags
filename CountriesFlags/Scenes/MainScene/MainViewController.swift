@@ -16,7 +16,7 @@ class MainViewController: UIViewController {
     private weak var flagLabel: UILabel!
     private weak var chooseButton: UIButton!
     
-    private var choosedFlagId: Int = 0
+    private var choosedFlagId: Int?
 
     //MARK: - public properties
     var router: MainRouter!

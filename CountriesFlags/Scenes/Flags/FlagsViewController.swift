@@ -53,8 +53,10 @@ class FlagsViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        let indexPath = IndexPath(row: viewModel.choosedFlag.value, section: 0)
-        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+        if let choosedFlag = viewModel.choosedFlag.value {
+            let indexPath = IndexPath(row: choosedFlag, section: 0)
+            collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
+        }
     }
     
     //MARK: - private methods
@@ -74,6 +76,17 @@ class FlagsViewController: UIViewController {
                     self?.delegate?.didFinishFlag(indexPath.row)
                 })
             .disposed(by: disposeBag)
+        
+        collectionView.rx
+            .itemDeselected
+            .subscribe(
+                onNext: {
+                    [weak self] (indexPath) in
+                    print(indexPath.row)
+                }
+            )
+            .disposed(by: disposeBag)
+        
     }
     
     private func configureRouter() {
@@ -90,7 +103,15 @@ class FlagsViewController: UIViewController {
 }
 
 extension FlagsViewController: UICollectionViewDelegate {
-  
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        let cell = collectionView.cellForItem(at: indexPath) as! FlagCollectionViewCell
+        
+        if cell.isSelected {
+            collectionView.selectItem(at: nil, animated: true, scrollPosition: .centeredVertically)
+            return false
+        }
+        return true
+    }
 }
 
 extension FlagsViewController: UICollectionViewDataSource {
