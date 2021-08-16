@@ -54,17 +54,13 @@ class FlagsViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         let indexPath = IndexPath(row: viewModel.choosedFlag.value, section: 0)
-        collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
-        
+        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
     }
     
     //MARK: - private methods
     private func configureViews() {
         collectionView.delegate = self
         collectionView.dataSource = self
-        
-        let indexPath = IndexPath(row: viewModel.choosedFlag.value, section: 0)
-        collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
     }
     
     private func configureBinding() {
@@ -106,11 +102,6 @@ extension FlagsViewController: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "id", for: indexPath) as! FlagCollectionViewCell
         let flag = viewModel.flags[indexPath.row]
         cell.configure(flag)
-        
-        if indexPath.row == viewModel.choosedFlag.value {
-            cell.isSelected = true
-        }
-        
         
         return cell
     }
