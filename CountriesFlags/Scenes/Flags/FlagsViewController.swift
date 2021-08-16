@@ -76,17 +76,6 @@ class FlagsViewController: UIViewController {
                     self?.delegate?.didFinishFlag(indexPath.row)
                 })
             .disposed(by: disposeBag)
-        
-        collectionView.rx
-            .itemDeselected
-            .subscribe(
-                onNext: {
-                    [weak self] (indexPath) in
-                    print(indexPath.row)
-                }
-            )
-            .disposed(by: disposeBag)
-        
     }
     
     private func configureRouter() {
