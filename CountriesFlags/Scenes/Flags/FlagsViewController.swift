@@ -52,6 +52,7 @@ class FlagsViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         let indexPath = IndexPath(row: viewModel.choosedFlag.value, section: 0)
         collectionView.scrollToItem(at: indexPath, at: .centeredVertically, animated: true)
         
