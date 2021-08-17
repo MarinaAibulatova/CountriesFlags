@@ -14,11 +14,11 @@ protocol FlagsViewModel: AnyObject {
     var flags: [FlagModel] {get set}
     func saveFlag()
     
-    var selectedFlag: BehaviorRelay<Optional<FlagModel>> {get set}
+    var selectedFlags: BehaviorRelay<[FlagModel]> {get set}
 }
 
 class FlagsDetailViewModel: FlagsViewModel {
-    var selectedFlag: BehaviorRelay<Optional<FlagModel>> = .init(value: nil)
+    var selectedFlags: BehaviorRelay<[FlagModel]> = .init(value: [])
     
     var flags: [FlagModel]
     
@@ -26,7 +26,7 @@ class FlagsDetailViewModel: FlagsViewModel {
         
     }
     
-    init(currentFlag: FlagModel?) {
+    init(currentFlags: [FlagModel]) {
         var flags: [FlagModel] = []
         var id = 0
         for item in Assets.Flag.allFlags {
@@ -44,7 +44,7 @@ class FlagsDetailViewModel: FlagsViewModel {
             flags.append(flag)
         }
         self.flags = flags
-        self.selectedFlag.accept(currentFlag)
+        self.selectedFlags.accept(currentFlags)
     }
 }
 

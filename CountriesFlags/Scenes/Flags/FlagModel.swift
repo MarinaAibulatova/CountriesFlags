@@ -10,7 +10,7 @@ import UIKit
 import RxSwift
 import RxCocoa
 
-struct FlagModel {
+struct FlagModel: Equatable {
     let id: Int
     let url: URL?
 }

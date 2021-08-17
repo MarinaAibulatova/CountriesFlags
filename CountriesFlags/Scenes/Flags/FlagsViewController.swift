@@ -11,7 +11,7 @@ import RxSwift
 import Kingfisher
 
 protocol FlagsDelegate: AnyObject {
-    func didFinishFlag(_ selectedFlag: FlagModel?)
+    func didFinishFlag(_ selectedFlag: [FlagModel])
 }
 
 class FlagsViewController: UIViewController {
@@ -24,6 +24,8 @@ class FlagsViewController: UIViewController {
     
     var viewModel: FlagsViewModel
     var router: FlagsRouter!
+    var isMultiple: Bool = false
+    var flags: [FlagModel] = []
     
     init(viewModel: FlagsViewModel) {
         self.viewModel = viewModel
@@ -45,15 +47,17 @@ class FlagsViewController: UIViewController {
         super.viewDidLoad()
         
         title = "Flags"
-        
+       
         configureViews()
         configureBinding()
         configureRouter()
         configureNavigatorBar()
         
+        self.flags = viewModel.selectedFlags.value
+        
         DispatchQueue.main.async {
-            if let selectedFlag = self.viewModel.selectedFlag.value {
-                let indexPath = IndexPath(row: selectedFlag.id, section: 0)
+            for flag in self.viewModel.selectedFlags.value {
+                let indexPath = IndexPath(row: flag.id, section: 0)
                 self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
         }
@@ -65,10 +69,11 @@ class FlagsViewController: UIViewController {
         collectionView.register(FlagCollectionViewCell.self, forCellWithReuseIdentifier: FlagCollectionViewCell.idCell)
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.allowsMultipleSelection = self.isMultiple
     }
     
     private func configureBinding() {
-        
+       
     }
     
     private func configureRouter() {
@@ -82,30 +87,32 @@ class FlagsViewController: UIViewController {
             target: self,
             action: #selector(didFinishSelected(_:))
         )
-        setTitleImageView(for: viewModel.selectedFlag.value)
+        setTitleImageView(for: viewModel.selectedFlags.value)
     }
     
    @objc func didFinishSelected(_ sender: UIButton) {
-        self.delegate?.didFinishFlag(viewModel.selectedFlag.value)
+        self.delegate?.didFinishFlag(viewModel.selectedFlags.value)
         self.router.back()
     }
     
-    private func setTitleImageView(for flag: FlagModel?) {
-        if let flag = flag, let url = flag.url {
-            KingfisherManager.shared.retrieveImage(with: url) {
-                (result) in
-                
-                switch result {
-                case .success(let value):
-                    print(value.image)
-                    DispatchQueue.main.async {
-                        let imageView = UIImageView(image: value.image)
-                        imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-                        imageView.contentMode = .scaleAspectFit
-                        self.navigationItem.titleView = imageView
+    private func setTitleImageView(for flags: [FlagModel]) {
+        if !self.isMultiple, flags.count > 0 {
+            let flag = flags[0]
+            if let url = flag.url {
+                KingfisherManager.shared.retrieveImage(with: url) {
+                    (result) in
+                    
+                    switch result {
+                    case .success(let value):
+                        DispatchQueue.main.async {
+                            let imageView = UIImageView(image: value.image)
+                            imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+                            imageView.contentMode = .scaleAspectFit
+                            self.navigationItem.titleView = imageView
+                        }
+                    case .failure(let error):
+                        print(error.localizedDescription)
                     }
-                case .failure(let error):
-                    print(error.errorDescription)
                 }
             }
         }
@@ -113,18 +120,27 @@ class FlagsViewController: UIViewController {
 }
 
 extension FlagsViewController: UICollectionViewDelegate {
-    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
-        let cell = collectionView.cellForItem(at: indexPath) as! FlagCollectionViewCell
-        
-        if cell.isSelected {
-            collectionView.selectItem(at: nil, animated: true, scrollPosition: .centeredVertically)
-            self.viewModel.selectedFlag.accept(nil)
-            
-            return false
+ 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if isMultiple {
+            self.viewModel.selectedFlags.accept(
+                self.viewModel.selectedFlags.value + [viewModel.flags[indexPath.row]])
+            flags = self.viewModel.selectedFlags.value
+        }else {
+            self.viewModel.selectedFlags.accept([viewModel.flags[indexPath.row]])
+            setTitleImageView(for: viewModel.selectedFlags.value)
         }
-        self.viewModel.selectedFlag.accept(viewModel.flags[indexPath.row])
-        setTitleImageView(for: viewModel.selectedFlag.value)
-        return true
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
+       
+        if isMultiple {
+            let index = flags.firstIndex(of: viewModel.flags[indexPath.row])
+            flags.remove(at: index!)
+            self.viewModel.selectedFlags.accept(flags)
+        }else {
+            self.viewModel.selectedFlags.accept([])
+        }
     }
 }
 

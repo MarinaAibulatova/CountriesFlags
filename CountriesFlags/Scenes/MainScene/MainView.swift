@@ -11,6 +11,7 @@ class MainView: UIView {
     //MARK: - public properties
     var flagLabel: UILabel!
     var chooseButton: UIButton!
+    var switchView: UISwitch!
     
     //MARK: - private properties
     var contentStackView: UIStackView!
@@ -35,6 +36,7 @@ class MainView: UIView {
             i.spacing = 10
             i.alignment = .fill
             i.distribution = .fill
+            
             return i
         }()
         
@@ -45,6 +47,12 @@ class MainView: UIView {
             i.font = UIFont.systemFont(ofSize: 14)
             i.textColor = .black
             
+            return i
+        }()
+        
+        switchView = {
+            let i = UISwitch()
+            i.setOn(false, animated: true)
             return i
         }()
         
@@ -60,14 +68,16 @@ class MainView: UIView {
         
         addSubview(contentStackView)
         contentStackView.addArrangedSubview(flagLabel)
+        contentStackView.addArrangedSubview(switchView)
         contentStackView.addArrangedSubview(chooseButton)
+        
     }
     
     private func setupConstraints() {
         contentStackView.snp.makeConstraints {
             $0.top.equalTo(safeAreaLayoutGuide.snp.top)
             $0.width.equalToSuperview()
-            $0.height.equalTo(300)
+            $0.height.equalTo(150)
         }
     }
 

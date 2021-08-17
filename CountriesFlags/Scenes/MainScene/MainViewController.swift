@@ -15,8 +15,9 @@ class MainViewController: UIViewController {
     private let disposeBag = DisposeBag()
     private weak var flagLabel: UILabel!
     private weak var chooseButton: UIButton!
+    private weak var switchView: UISwitch!
     
-    private var selectedFlag: FlagModel?
+    private var selectedFlags: [FlagModel] = []
 
     //MARK: - public properties
     var router: MainRouter!
@@ -26,6 +27,7 @@ class MainViewController: UIViewController {
         let view = MainView()
         self.flagLabel = view.flagLabel
         self.chooseButton = view.chooseButton
+        self.switchView = view.switchView
         self.view = view
     }
    
@@ -39,32 +41,47 @@ class MainViewController: UIViewController {
     }
     
     //MARK: - private methods
+    
     private func configureViews() {
         chooseButton.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
+        switchView.addTarget(self, action: #selector(switchViewTapped(_:)), for: .valueChanged)
     }
     
     private func configureBinding() {
-        //test
-        
+      
     }
     
     private func configureRouter() {
         router = MainRouter(self)
     }
+
+    private func setTitle() {
+        title = switchView.isOn ? "Choosing few flags" : "Choosing flag"
+    }
+    
+    private func setLabelText() {
+        flagLabel.text = "You choosed \(String(selectedFlags.count)) \(selectedFlags.count > 0 ? "flag": "flags")"
+    }
     
     //MARK: - actions
     @objc func buttonTapped(_ sender: UIButton) {
-        router.showFlags(with: selectedFlag)
+        router.showFlags(with: selectedFlags, isMultiple: switchView.isOn)
+    }
+    @objc func switchViewTapped(_ sender: UISwitch) {
+        setTitle()
+        //add clear choosing flags
+        self.selectedFlags.removeAll()
+        setTitle()
+        setLabelText()
     }
     
     // MARK: - Navigation
 
-
 }
 
 extension MainViewController: FlagsDelegate {
-    func didFinishFlag(_ selectedFlag: FlagModel?) {
-        flagLabel.text = (selectedFlag == nil) ? "" : String(selectedFlag!.id)
-        self.selectedFlag = selectedFlag
+    func didFinishFlag(_ selectedFlags: [FlagModel]) {
+        self.selectedFlags = selectedFlags
+        setLabelText()
     }
 }
