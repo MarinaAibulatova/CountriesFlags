@@ -25,8 +25,7 @@ class FlagsViewController: UIViewController {
     
     var viewModel: FlagsViewModel
     var router: FlagsRouter!
-    var isMultiple: Bool = false
-   
+    
     init(viewModel: FlagsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -68,7 +67,7 @@ class FlagsViewController: UIViewController {
         collectionView.register(FlagCollectionViewCell.self, forCellWithReuseIdentifier: FlagCollectionViewCell.idCell)
         collectionView.delegate = self
         collectionView.dataSource = self
-        collectionView.allowsMultipleSelection = self.isMultiple
+        collectionView.allowsMultipleSelection = self.viewModel.isMultiple
     }
     
     private func configureBinding() {
@@ -95,7 +94,7 @@ class FlagsViewController: UIViewController {
     }
     
     private func setTitleImageView(for flags: [FlagModel]) {
-        if !self.isMultiple, flags.count > 0 {
+        if !self.viewModel.isMultiple, flags.count > 0 {
             let flag = flags[0]
             if let url = flag.url {
                 KingfisherManager.shared.retrieveImage(with: url) {
@@ -118,8 +117,18 @@ class FlagsViewController: UIViewController {
 
 extension FlagsViewController: UICollectionViewDelegate {
  
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        let cell = collectionView.cellForItem(at: indexPath) as! FlagCollectionViewCell
+        if cell.isSelected, !viewModel.isMultiple {
+            self.viewModel.selectedFlags.removeAll()
+            collectionView.deselectItem(at: indexPath, animated: true)
+            return false
+        }
+        return true
+    }
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if isMultiple {
+        if viewModel.isMultiple {
             self.viewModel.selectedFlags += [viewModel.flags[indexPath.row]]
         }else {
             self.viewModel.selectedFlags = [viewModel.flags[indexPath.row]]
@@ -129,7 +138,7 @@ extension FlagsViewController: UICollectionViewDelegate {
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
        
-        if isMultiple {
+        if viewModel.isMultiple {
             let index = self.viewModel.selectedFlags.firstIndex(of: viewModel.flags[indexPath.row])
             self.viewModel.selectedFlags.remove(at: index!)
         }else {

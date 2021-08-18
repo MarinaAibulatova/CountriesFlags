@@ -13,20 +13,20 @@ import RxCocoa
 protocol FlagsViewModel: AnyObject {
     var flags: [FlagModel] {get set}
     func saveFlag()
-    
+    var isMultiple: Bool {get set}
     var selectedFlags: [FlagModel] {get set}
 }
 
 class FlagsDetailViewModel: FlagsViewModel {
     var selectedFlags: [FlagModel] = []
-    
+    var isMultiple: Bool = false
     var flags: [FlagModel]
     
     func saveFlag() {
         
     }
     
-    init(currentFlags: [FlagModel]) {
+    init(currentFlags: [FlagModel], _ isMultiple: Bool) {
         var flags: [FlagModel] = []
         var id = 0
         
@@ -55,6 +55,7 @@ class FlagsDetailViewModel: FlagsViewModel {
         
         self.flags = flags
         self.selectedFlags = currentFlags
+        self.isMultiple = isMultiple
     }
 }
 
