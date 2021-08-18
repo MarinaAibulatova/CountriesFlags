@@ -14,11 +14,11 @@ protocol FlagsViewModel: AnyObject {
     var flags: [FlagModel] {get set}
     func saveFlag()
     
-    var selectedFlags: BehaviorRelay<[FlagModel]> {get set}
+    var selectedFlags: [FlagModel] {get set}
 }
 
 class FlagsDetailViewModel: FlagsViewModel {
-    var selectedFlags: BehaviorRelay<[FlagModel]> = .init(value: [])
+    var selectedFlags: [FlagModel] = []
     
     var flags: [FlagModel]
     
@@ -37,7 +37,8 @@ class FlagsDetailViewModel: FlagsViewModel {
             let fileManager = FileManager.default
             
             let properties = [URLResourceKey.localizedNameKey,
-                              URLResourceKey.creationDateKey, URLResourceKey.localizedTypeDescriptionKey]
+                              URLResourceKey.creationDateKey,
+                              URLResourceKey.localizedTypeDescriptionKey]
             
             do {
                 let imagesURL = try fileManager.contentsOfDirectory(at: url as URL, includingPropertiesForKeys: properties, options: FileManager.DirectoryEnumerationOptions.skipsHiddenFiles)
@@ -53,7 +54,7 @@ class FlagsDetailViewModel: FlagsViewModel {
         }
         
         self.flags = flags
-        self.selectedFlags.accept(currentFlags)
+        self.selectedFlags = currentFlags
     }
 }
 

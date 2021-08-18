@@ -26,8 +26,7 @@ class FlagsViewController: UIViewController {
     var viewModel: FlagsViewModel
     var router: FlagsRouter!
     var isMultiple: Bool = false
-    var flags: [FlagModel] = []
-    
+   
     init(viewModel: FlagsViewModel) {
         self.viewModel = viewModel
         super.init(nibName: nil, bundle: nil)
@@ -55,10 +54,8 @@ class FlagsViewController: UIViewController {
         configureRouter()
         configureNavigatorBar()
         
-        self.flags = viewModel.selectedFlags.value
-        
         DispatchQueue.main.async {
-            for flag in self.viewModel.selectedFlags.value {
+            for flag in self.viewModel.selectedFlags {
                 let indexPath = IndexPath(row: flag.id, section: 0)
                 self.collectionView.selectItem(at: indexPath, animated: true, scrollPosition: .top)
             }
@@ -89,11 +86,11 @@ class FlagsViewController: UIViewController {
             target: self,
             action: #selector(didFinishSelected(_:))
         )
-        setTitleImageView(for: viewModel.selectedFlags.value)
+        setTitleImageView(for: viewModel.selectedFlags)
     }
     
    @objc func didFinishSelected(_ sender: UIButton) {
-        self.delegate?.didFinishFlag(viewModel.selectedFlags.value)
+        self.delegate?.didFinishFlag(viewModel.selectedFlags)
         self.router.back()
     }
     
@@ -123,23 +120,20 @@ extension FlagsViewController: UICollectionViewDelegate {
  
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if isMultiple {
-            self.viewModel.selectedFlags.accept(
-                self.viewModel.selectedFlags.value + [viewModel.flags[indexPath.row]])
-            flags = self.viewModel.selectedFlags.value
+            self.viewModel.selectedFlags += [viewModel.flags[indexPath.row]]
         }else {
-            self.viewModel.selectedFlags.accept([viewModel.flags[indexPath.row]])
-            setTitleImageView(for: viewModel.selectedFlags.value)
+            self.viewModel.selectedFlags = [viewModel.flags[indexPath.row]]
+            setTitleImageView(for: viewModel.selectedFlags)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, didDeselectItemAt indexPath: IndexPath) {
        
         if isMultiple {
-            let index = flags.firstIndex(of: viewModel.flags[indexPath.row])
-            flags.remove(at: index!)
-            self.viewModel.selectedFlags.accept(flags)
+            let index = self.viewModel.selectedFlags.firstIndex(of: viewModel.flags[indexPath.row])
+            self.viewModel.selectedFlags.remove(at: index!)
         }else {
-            self.viewModel.selectedFlags.accept([])
+            self.viewModel.selectedFlags.removeAll()
         }
     }
 }
