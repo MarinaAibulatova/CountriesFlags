@@ -29,20 +29,29 @@ class FlagsDetailViewModel: FlagsViewModel {
     init(currentFlags: [FlagModel]) {
         var flags: [FlagModel] = []
         var id = 0
-        for item in Assets.Flag.allFlags {
+        
+        if let docPath = Bundle.main.resourcePath {
+            print(docPath)
+            let imagesPath = docPath + "/flagsImages"
+            let url = NSURL(fileURLWithPath: imagesPath)
+            let fileManager = FileManager.default
             
-            let description = item.description
-            let startIndex = description.index(description.startIndex, offsetBy: 36)
-            let end = description.index(description.endIndex, offsetBy: -13)
-            let range = startIndex..<end
+            let properties = [URLResourceKey.localizedNameKey,
+                              URLResourceKey.creationDateKey, URLResourceKey.localizedTypeDescriptionKey]
             
-            let url = URL.urlForImage(name: String(description[range]))
-            
-            let flag = FlagModel(id: id, url: url)
-            id += 1
-            
-            flags.append(flag)
+            do {
+                let imagesURL = try fileManager.contentsOfDirectory(at: url as URL, includingPropertiesForKeys: properties, options: FileManager.DirectoryEnumerationOptions.skipsHiddenFiles)
+                
+                for urlImage in imagesURL {
+                    let flag = FlagModel(id: id, url: urlImage)
+                    id += 1
+                    flags.append(flag)
+                }
+            }catch {
+                print(error.localizedDescription)
+            }
         }
+        
         self.flags = flags
         self.selectedFlags.accept(currentFlags)
     }

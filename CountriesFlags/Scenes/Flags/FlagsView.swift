@@ -11,9 +11,8 @@ class FlagsView: UIView {
     
     //MARK: - public properties
     var collectionView: UICollectionView!
-    
+    var imageView: UIImageView!
     //MARK: - private properties
-    private var flags: [UIImage]!
     private var layot: UICollectionViewFlowLayout!
     
     //MARK: - init
@@ -29,7 +28,6 @@ class FlagsView: UIView {
     
     //MARK: - private methods
     private func setupViews() {
-        flags = Assets.Flag.allFlags
         backgroundColor = .white
         layot = {
             let i = UICollectionViewFlowLayout()
@@ -42,6 +40,14 @@ class FlagsView: UIView {
             let i = UICollectionView(frame: .zero, collectionViewLayout: layot)
             i.backgroundColor = .white
             i.register(FlagCollectionViewCell.self, forCellWithReuseIdentifier: "id")
+            return i
+        }()
+        
+        imageView = {
+            let i = UIImageView()
+            i.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
+            i.contentMode = .scaleAspectFit
+            
             return i
         }()
         

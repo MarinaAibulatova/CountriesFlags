@@ -20,6 +20,7 @@ class FlagsViewController: UIViewController {
     private let disposeBag = DisposeBag()
     
     private weak var collectionView: UICollectionView!
+    private weak var imageView: UIImageView!
     weak var delegate: FlagsDelegate?
     
     var viewModel: FlagsViewModel
@@ -40,6 +41,7 @@ class FlagsViewController: UIViewController {
     override func loadView() {
         let view = FlagsView()
         self.collectionView = view.collectionView
+        self.imageView = view.imageView
         self.view = view
     }
     
@@ -105,10 +107,8 @@ class FlagsViewController: UIViewController {
                     switch result {
                     case .success(let value):
                         DispatchQueue.main.async {
-                            let imageView = UIImageView(image: value.image)
-                            imageView.frame = CGRect(x: 0, y: 0, width: 20, height: 20)
-                            imageView.contentMode = .scaleAspectFit
-                            self.navigationItem.titleView = imageView
+                            self.imageView.image = value.image
+                            self.navigationItem.titleView = self.imageView
                         }
                     case .failure(let error):
                         print(error.localizedDescription)

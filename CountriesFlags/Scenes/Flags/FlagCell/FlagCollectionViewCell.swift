@@ -39,10 +39,26 @@ class FlagCollectionViewCell: UICollectionViewCell {
     
     func configure(_ flag: FlagModel) {
         if let url = flag.url {
-            imageFlag.kf.setImage(with: url)
+            imageFlag.kf.setImage(
+                with: url,
+                placeholder: nil,
+                options: nil
+            ) { result in
+                switch result {
+                case .success :
+                    break
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+            }
         }
     }
     
+    override func prepareForReuse() {
+        super.prepareForReuse()
+        imageFlag.kf.cancelDownloadTask()
+        imageFlag.image = nil
+    }
     
     //MARK: - private methods
     private func setupView() {

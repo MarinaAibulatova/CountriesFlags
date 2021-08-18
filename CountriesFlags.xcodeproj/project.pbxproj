@@ -30,6 +30,7 @@
 		9C60082C26C68BFA0064EAB8 /* FlagsFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60082B26C68BFA0064EAB8 /* FlagsFactory.swift */; };
 		9C60082E26C68C080064EAB8 /* FlagsRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60082D26C68C080064EAB8 /* FlagsRouter.swift */; };
 		9C60083026C68E050064EAB8 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C60082F26C68E040064EAB8 /* MainViewModel.swift */; };
+		9C7584BA26CCD6FF0093FD16 /* flagsImages in Resources */ = {isa = PBXBuildFile; fileRef = 9C7584B926CCD6FE0093FD16 /* flagsImages */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -59,6 +60,7 @@
 		9C60082B26C68BFA0064EAB8 /* FlagsFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagsFactory.swift; sourceTree = "<group>"; };
 		9C60082D26C68C080064EAB8 /* FlagsRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlagsRouter.swift; sourceTree = "<group>"; };
 		9C60082F26C68E040064EAB8 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
+		9C7584B926CCD6FE0093FD16 /* flagsImages */ = {isa = PBXFileReference; lastKnownFileType = folder; path = flagsImages; sourceTree = "<group>"; };
 		EA50CDE099B6F727D4C55162 /* Pods_CountriesFlags.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_CountriesFlags.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -155,6 +157,7 @@
 		9C60081226C543950064EAB8 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9C7584B926CCD6FE0093FD16 /* flagsImages */,
 				9C6007FC26C526A90064EAB8 /* Assets.xcassets */,
 			);
 			path = Resources;
@@ -278,6 +281,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9C7584BA26CCD6FF0093FD16 /* flagsImages in Resources */,
 				9C60080026C526A90064EAB8 /* LaunchScreen.storyboard in Resources */,
 				9C6007FD26C526A90064EAB8 /* Assets.xcassets in Resources */,
 			);
